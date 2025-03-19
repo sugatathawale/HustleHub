@@ -30,9 +30,14 @@ export default function Home() {
       setMousePosition({ x: e.clientX, y: e.clientY })
     }
 
+    // Redirect to /custom-project when that tab is selected
+    if (activeTab === "custom-project") {
+      router.push("/custom-project")
+    }
+
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [setTheme])
+  }, [setTheme, activeTab, router])
 
   if (!mounted) return null
 
@@ -229,62 +234,64 @@ export default function Home() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.slice(0, 6).map((project) => (
-                      <HoverCard3D key={project.id} glow={project.glow} onClick={() => handleProjectClick(project.id)}>
-                        <div className="p-6 h-full flex flex-col">
-                          <div className="relative w-full h-40 mb-4 rounded-lg overflow-hidden">
-                            <Image
-                              src={project.image || "/placeholder.svg"}
-                              alt={project.title}
-                              fill
-                              className="object-cover transition-transform duration-500 hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                            <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                              <span
-                                className={`text-xs px-2 py-1 rounded-full bg-${project.glow}-500/20 text-${project.glow}-500`}
-                              >
-                                {project.category}
-                              </span>
-                              <span className="text-xs px-2 py-1 rounded-full bg-white/20 text-white">
-                                {project.difficulty}
-                              </span>
-                            </div>
-                            <div className="absolute top-3 right-3">
-                              <div className="flex items-center gap-1 bg-black/50 rounded-full px-2 py-1">
-                                <Clock className="h-3 w-3 text-white" />
-                                <span className="text-xs text-white">{project.duration}</span>
+                      <div key={project.id} onClick={() => handleProjectClick(project.id)} className="cursor-pointer">
+                        <HoverCard3D glow={project.glow}>
+                          <div className="p-6 h-full flex flex-col">
+                            <div className="relative w-full h-40 mb-4 rounded-lg overflow-hidden">
+                              <Image
+                                src={project.image || "/placeholder.svg"}
+                                alt={project.title}
+                                fill
+                                className="object-cover transition-transform duration-500 hover:scale-110"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                              <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                                <span
+                                  className={`text-xs px-2 py-1 rounded-full bg-${project.glow}-500/20 text-${project.glow}-500`}
+                                >
+                                  {project.category}
+                                </span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-white/20 text-white">
+                                  {project.difficulty}
+                                </span>
+                              </div>
+                              <div className="absolute top-3 right-3">
+                                <div className="flex items-center gap-1 bg-black/50 rounded-full px-2 py-1">
+                                  <Clock className="h-3 w-3 text-white" />
+                                  <span className="text-xs text-white">{project.duration}</span>
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                          <p className="text-sm text-gray-300 mb-4 line-clamp-2">{project.description}</p>
+                            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                            <p className="text-sm text-gray-300 mb-4 line-clamp-2">{project.description}</p>
 
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.skills.slice(0, 3).map((skill, index) => (
-                              <span key={index} className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
-                                {skill}
-                              </span>
-                            ))}
-                            {project.skills.length > 3 && (
-                              <span className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
-                                +{project.skills.length - 3} more
-                              </span>
-                            )}
-                          </div>
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {project.skills.slice(0, 3).map((skill, index) => (
+                                <span key={index} className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
+                                  {skill}
+                                </span>
+                              ))}
+                              {project.skills.length > 3 && (
+                                <span className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
+                                  +{project.skills.length - 3} more
+                                </span>
+                              )}
+                            </div>
 
-                          <div className="mt-auto flex justify-between items-center">
-                            <Button variant="ghost" className="text-white/70 hover:text-white gap-1 p-0">
-                              <Play className="h-4 w-4 text-red-500" /> Watch preview
-                            </Button>
-                            <Button
-                              className={`bg-${project.glow}-500/20 text-${project.glow}-500 hover:bg-${project.glow}-500/30 rounded-full`}
-                            >
-                              <Sparkles className="mr-2 h-4 w-4" /> View Project
-                            </Button>
+                            <div className="mt-auto flex justify-between items-center">
+                              <Button variant="ghost" className="text-white/70 hover:text-white gap-1 p-0">
+                                <Play className="h-4 w-4 text-red-500" /> Watch preview
+                              </Button>
+                              <Button
+                                className={`bg-${project.glow}-500/20 text-${project.glow}-500 hover:bg-${project.glow}-500/30 rounded-full`}
+                              >
+                                <Sparkles className="mr-2 h-4 w-4" /> View Project
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                      </HoverCard3D>
+                        </HoverCard3D>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -325,62 +332,64 @@ export default function Home() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project) => (
-                      <HoverCard3D key={project.id} glow={project.glow} onClick={() => handleProjectClick(project.id)}>
-                        <div className="p-6 h-full flex flex-col">
-                          <div className="relative w-full h-40 mb-4 rounded-lg overflow-hidden">
-                            <Image
-                              src={project.image || "/placeholder.svg"}
-                              alt={project.title}
-                              fill
-                              className="object-cover transition-transform duration-500 hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                            <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                              <span
-                                className={`text-xs px-2 py-1 rounded-full bg-${project.glow}-500/20 text-${project.glow}-500`}
-                              >
-                                {project.category}
-                              </span>
-                              <span className="text-xs px-2 py-1 rounded-full bg-white/20 text-white">
-                                {project.difficulty}
-                              </span>
-                            </div>
-                            <div className="absolute top-3 right-3">
-                              <div className="flex items-center gap-1 bg-black/50 rounded-full px-2 py-1">
-                                <Clock className="h-3 w-3 text-white" />
-                                <span className="text-xs text-white">{project.duration}</span>
+                      <div key={project.id} onClick={() => handleProjectClick(project.id)} className="cursor-pointer">
+                        <HoverCard3D glow={project.glow}>
+                          <div className="p-6 h-full flex flex-col">
+                            <div className="relative w-full h-40 mb-4 rounded-lg overflow-hidden">
+                              <Image
+                                src={project.image || "/placeholder.svg"}
+                                alt={project.title}
+                                fill
+                                className="object-cover transition-transform duration-500 hover:scale-110"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                              <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                                <span
+                                  className={`text-xs px-2 py-1 rounded-full bg-${project.glow}-500/20 text-${project.glow}-500`}
+                                >
+                                  {project.category}
+                                </span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-white/20 text-white">
+                                  {project.difficulty}
+                                </span>
+                              </div>
+                              <div className="absolute top-3 right-3">
+                                <div className="flex items-center gap-1 bg-black/50 rounded-full px-2 py-1">
+                                  <Clock className="h-3 w-3 text-white" />
+                                  <span className="text-xs text-white">{project.duration}</span>
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                          <p className="text-sm text-gray-300 mb-4 line-clamp-2">{project.description}</p>
+                            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                            <p className="text-sm text-gray-300 mb-4 line-clamp-2">{project.description}</p>
 
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.skills.slice(0, 3).map((skill, index) => (
-                              <span key={index} className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
-                                {skill}
-                              </span>
-                            ))}
-                            {project.skills.length > 3 && (
-                              <span className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
-                                +{project.skills.length - 3} more
-                              </span>
-                            )}
-                          </div>
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {project.skills.slice(0, 3).map((skill, index) => (
+                                <span key={index} className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
+                                  {skill}
+                                </span>
+                              ))}
+                              {project.skills.length > 3 && (
+                                <span className="text-xs px-2 py-1 rounded-full bg-gray-800 text-gray-300">
+                                  +{project.skills.length - 3} more
+                                </span>
+                              )}
+                            </div>
 
-                          <div className="mt-auto flex justify-between items-center">
-                            <Button variant="ghost" className="text-white/70 hover:text-white gap-1 p-0">
-                              <Play className="h-4 w-4 text-red-500" /> Watch preview
-                            </Button>
-                            <Button
-                              className={`bg-${project.glow}-500/20 text-${project.glow}-500 hover:bg-${project.glow}-500/30 rounded-full`}
-                            >
-                              <Sparkles className="mr-2 h-4 w-4" /> View Project
-                            </Button>
+                            <div className="mt-auto flex justify-between items-center">
+                              <Button variant="ghost" className="text-white/70 hover:text-white gap-1 p-0">
+                                <Play className="h-4 w-4 text-red-500" /> Watch preview
+                              </Button>
+                              <Button
+                                className={`bg-${project.glow}-500/20 text-${project.glow}-500 hover:bg-${project.glow}-500/30 rounded-full`}
+                              >
+                                <Sparkles className="mr-2 h-4 w-4" /> View Project
+                              </Button>
+                            </div>
                           </div>
-                        </div>
-                      </HoverCard3D>
+                        </HoverCard3D>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -397,6 +406,58 @@ export default function Home() {
               >
                 <div className="mb-8">
                   <GlitchText text="Find Your Perfect Mentor" className="text-3xl font-bold mb-8 text-center" />
+                  
+                  {/* Sliding announcement card */}
+                  <div className="relative mb-12 overflow-hidden">
+                    <motion.div
+                      initial={{ x: "100%" }}
+                      animate={{ x: "0%" }}
+                      transition={{ 
+                        type: "spring", 
+                        damping: 20, 
+                        stiffness: 100,
+                        delay: 0.3
+                      }}
+                      className="relative max-w-3xl mx-auto"
+                    >
+                      <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-green-600 to-blue-600 opacity-75 blur-sm animate-pulse" />
+                      <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-green-500/30 overflow-hidden">
+                        <div className="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-r from-green-500/30 to-blue-500/30 rounded-full blur-2xl" />
+                        <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-2xl" />
+                        
+                        <div className="flex items-center justify-between relative z-10">
+                          <div>
+                            <div className="bg-gradient-to-r from-green-500 to-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-2 animate-pulse">
+                              BIGGEST EVENT YET!
+                            </div>
+                            <h3 className="text-xl font-bold mb-2">Tech Career Transformation Summit</h3>
+                            <p className="text-gray-300 text-sm mb-2">
+                              Join all our top mentors for a 3-hour immersive session that could redefine your entire career trajectory!
+                            </p>
+                            <div className="flex items-center gap-2 text-xs mt-3">
+                              <div className="bg-black/60 text-white px-2 py-1 rounded-full border border-white/20">
+                                In 15 days
+                              </div>
+                              <div className="bg-black/60 text-white px-2 py-1 rounded-full border border-white/20">
+                                Limited to 50 participants
+                              </div>
+                              <div className="bg-red-500/20 text-red-400 px-2 py-1 rounded-full font-medium">
+                                30 spots left!
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-xs text-gray-400 line-through">$199</div>
+                            <div className="text-2xl font-bold text-white mb-2">$79</div>
+                            <Button className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white rounded-full whitespace-nowrap">
+                              Reserve Now
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                  
                   <MentorSection mentors={mentors} expanded={true} />
                 </div>
               </motion.div>
@@ -465,6 +526,134 @@ export default function Home() {
                         </div>
                       </motion.div>
                     ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === "assets" && (
+              <motion.div
+                key="assets"
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                  <div className="relative">
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                    <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-purple-500/30 text-center max-w-2xl">
+                      <h2 className="text-3xl font-bold mb-6">
+                        <GlitchText text="Resources Coming Soon" />
+                      </h2>
+                      <p className="text-xl text-gray-300 mb-6">
+                        We're preparing a comprehensive collection of resources to help you accelerate your career journey.
+                      </p>
+                      <div className="flex justify-center">
+                        <div className="relative">
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                          <Button className="relative bg-black hover:bg-black/90 text-white border border-purple-500/30 rounded-full px-6 py-3">
+                            Get Notified When Ready
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === "stars" && (
+              <motion.div
+                key="stars"
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                  <div className="relative">
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                    <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-purple-500/30 text-center max-w-2xl">
+                      <h2 className="text-3xl font-bold mb-6">
+                        <GlitchText text="Success Stories Coming Soon" />
+                      </h2>
+                      <p className="text-xl text-gray-300 mb-6">
+                        We're collecting inspiring success stories from our community members who have transformed their careers with HustleHub.
+                      </p>
+                      <div className="flex justify-center">
+                        <div className="relative">
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                          <Button className="relative bg-black hover:bg-black/90 text-white border border-purple-500/30 rounded-full px-6 py-3">
+                            Submit Your Story
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === "certified" && (
+              <motion.div
+                key="certified"
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                  <div className="relative">
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                    <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-purple-500/30 text-center max-w-2xl">
+                      <h2 className="text-3xl font-bold mb-6">
+                        <GlitchText text="Certification Coming Soon" />
+                      </h2>
+                      <p className="text-xl text-gray-300 mb-6">
+                        Our industry-recognized certification program is under development. Get certified and stand out in the job market!
+                      </p>
+                      <div className="flex justify-center">
+                        <div className="relative">
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                          <Button className="relative bg-black hover:bg-black/90 text-white border border-purple-500/30 rounded-full px-6 py-3">
+                            Join Waitlist
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {activeTab === "courses" && (
+              <motion.div
+                key="courses"
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                  <div className="relative">
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                    <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-purple-500/30 text-center max-w-2xl">
+                      <h2 className="text-3xl font-bold mb-6">
+                        <GlitchText text="Courses Coming Soon" />
+                      </h2>
+                      <p className="text-xl text-gray-300 mb-6">
+                        Our team is working on creating high-quality courses taught by industry experts to help you master in-demand skills.
+                      </p>
+                      <div className="flex justify-center">
+                        <div className="relative">
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm" />
+                          <Button className="relative bg-black hover:bg-black/90 text-white border border-purple-500/30 rounded-full px-6 py-3">
+                            Get Early Access
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>

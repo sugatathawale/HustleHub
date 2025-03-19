@@ -3,7 +3,7 @@ import { FolderIcon, Award, BookOpen, Code, FileIcon, Star, ImageIcon, Briefcase
 export default function Sidebar() {
   const menuItems = [
     { icon: <FolderIcon className="w-5 h-5" />, label: "Projects" },
-    { icon: <Award className="w-5 h-5" />, label: "Get Certified" },
+    // { icon: <Award className="w-5 h-5" />, label: "Get Certified" },
     { icon: <BookOpen className="w-5 h-5" />, label: "Courses" },
     { icon: <Code className="w-5 h-5" />, label: "Source Code" },
     { icon: <FileIcon className="w-5 h-5" />, label: "Project Assets" },
@@ -16,7 +16,7 @@ export default function Sidebar() {
     <aside className="w-60 bg-[#0f1117] border-r border-gray-800 p-4 hidden md:block">
       <div className="flex items-center gap-2 mb-8">
         <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-emerald-600 rounded-md flex items-center justify-center">
-          <span className="text-white font-bold">G</span>
+          <span className="text-white font-bold">H</span>
         </div>
         <span className="text-xl font-bold">HustleHub.</span>
       </div>

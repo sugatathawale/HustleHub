@@ -2,9 +2,10 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Star, Calendar, MessageSquare } from "lucide-react"
+import { Star, Calendar, MessageSquare, ArrowRight } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 interface Mentor {
   id: number
@@ -24,6 +25,11 @@ interface MentorSectionProps {
 
 export default function MentorSection({ mentors, expanded = false }: MentorSectionProps) {
   const [hoveredMentor, setHoveredMentor] = useState<number | null>(null)
+  const router = useRouter()
+
+  const handleMentorClick = (mentorId: number) => {
+    router.push(`/mentor/${mentorId}`)
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -33,9 +39,10 @@ export default function MentorSection({ mentors, expanded = false }: MentorSecti
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: mentor.id * 0.1 }}
-          className="relative group"
+          className="relative group cursor-pointer"
           onMouseEnter={() => setHoveredMentor(mentor.id)}
           onMouseLeave={() => setHoveredMentor(null)}
+          onClick={() => handleMentorClick(mentor.id)}
         >
           <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 opacity-75 blur-sm group-hover:opacity-100 transition duration-300" />
           <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30 h-full flex flex-col">
@@ -55,7 +62,7 @@ export default function MentorSection({ mentors, expanded = false }: MentorSecti
                     className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end justify-center pb-2"
                   >
                     <span className="text-xs text-white font-medium px-2 py-1 rounded-full bg-purple-500/50 backdrop-blur-sm">
-                      View Profile
+                      Schedule Interview
                     </span>
                   </motion.div>
                 )}
@@ -86,15 +93,25 @@ export default function MentorSection({ mentors, expanded = false }: MentorSecti
 
             <div className="mt-auto space-y-2">
               <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full gap-2">
-                <MessageSquare className="h-4 w-4" /> Message
+                <Calendar className="h-4 w-4" /> Schedule Interview
               </Button>
               <Button
                 variant="outline"
-                className="w-full border-purple-500/30 text-purple-400 hover:bg-purple-500/10 rounded-full gap-2"
+                className="w-full border-purple-500/30 text-purple-400 hover:bg-purple-500/10 rounded-full gap-2 flex items-center justify-center"
               >
-                <Calendar className="h-4 w-4" /> Schedule Session
+                View Full Profile <ArrowRight className="h-4 w-4 ml-1" />
               </Button>
             </div>
+            
+            {hoveredMentor === mentor.id && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute -bottom-12 left-0 right-0 bg-purple-500/90 backdrop-blur-sm p-2 rounded-lg text-center text-white text-xs"
+              >
+                "This mentor has helped 40+ people land jobs at top tech companies!"
+              </motion.div>
+            )}
           </div>
         </motion.div>
       ))}

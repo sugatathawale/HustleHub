@@ -230,6 +230,54 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
                     </div>
                   </div>
 
+                  <div className="mt-8 bg-blue-500/10 p-6 rounded-xl border border-blue-500/20">
+                    <h3 className="text-xl font-bold mb-4">🚀 Career Boost Benefits</h3>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">✅</div>
+                        <p>Showcase AI integration skills that are in extremely high demand</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">✅</div>
+                        <p>Demonstrate expertise in modern React and Next.js patterns</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">✅</div>
+                        <p>Prove your ability to build production-ready, scalable applications</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">✅</div>
+                        <p>Stand out with a portfolio piece that actually impresses technical interviewers</p>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-8 bg-purple-500/10 p-6 rounded-xl border border-purple-500/20">
+                    <h3 className="text-xl font-bold mb-4">📦 What's Included</h3>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">📂</div>
+                        <p>Complete source code with clean, documented architecture</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">📝</div>
+                        <p>Installation guide and setup instructions</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">🔧</div>
+                        <p>Configuration templates for all necessary services</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">🔑</div>
+                        <p>API integration examples with secure practices</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <div className="flex-shrink-0 mt-1">📄</div>
+                        <p>Resume bullet points to highlight your implementation (Premium only)</p>
+                      </li>
+                    </ul>
+                  </div>
+
                   <div>
                     <h3 className="text-xl font-bold mb-4">Skills You'll Learn</h3>
                     <div className="flex flex-wrap gap-2">
@@ -358,7 +406,7 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
                 </TabsContent>
 
                 <TabsContent value="mentor" className="space-y-6">
-                  <h2 className="text-2xl font-bold mb-6">Your Project Mentor</h2>
+                  <h2 className="text-2xl font-bold mb-6">Meet Your Project Mentor</h2>
 
                   <div className="relative">
                     <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-75 blur-sm" />
@@ -401,11 +449,84 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
                           </div>
 
                           <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full">
-                            Schedule a Session
+                            Schedule Interview
                           </Button>
                         </div>
                       </div>
+                      
+                      <div className="mt-6 pt-6 border-t border-blue-500/20">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 className="font-bold mb-2">Success Rate</h4>
+                            <div className="text-2xl font-bold text-blue-400">94%</div>
+                            <p className="text-sm text-gray-400">of mentees land interviews</p>
+                          </div>
+                          
+                          <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 className="font-bold mb-2">Mentored</h4>
+                            <div className="text-2xl font-bold text-blue-400">200+</div>
+                            <p className="text-sm text-gray-400">developers to success</p>
+                          </div>
+                          
+                          <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 className="font-bold mb-2">Response Time</h4>
+                            <div className="text-2xl font-bold text-blue-400">&lt; 24 hrs</div>
+                            <p className="text-sm text-gray-400">quick guidance</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                  
+                  <div className="mt-8 relative overflow-hidden">
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-green-600 to-blue-600 opacity-75 blur-sm" />
+                    <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-green-500/30">
+                      <div className="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-r from-green-500/30 to-blue-500/30 rounded-full blur-2xl" />
+                      <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-2xl" />
+                      
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold">Exclusive Mentorship Event</h3>
+                        <div className="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm">Coming Soon</div>
+                      </div>
+                      
+                      <div className="relative mb-6">
+                        <div className="absolute top-0 right-0 -mt-3 -mr-3 bg-red-500/20 text-red-400 px-4 py-1 rounded-full text-sm font-bold animate-pulse">
+                          In 15 Days!
+                        </div>
+                        <Image
+                          src="/placeholder.svg?height=200&width=600"
+                          alt="Mentorship Webinar"
+                          width={600}
+                          height={200}
+                          className="rounded-lg w-full h-[150px] object-cover"
+                        />
+                      </div>
+                      
+                      <h4 className="text-lg font-bold mb-2">"Breaking into Tech Giants: Resume & Project Secrets"</h4>
+                      <p className="text-gray-300 mb-4">Join {project.mentor.name} for an exclusive live workshop revealing insider tips on what top companies look for in developer portfolios.</p>
+                      
+                      <div className="p-4 bg-black/40 rounded-lg mb-4 border border-blue-500/20">
+                        <p className="italic text-blue-300 text-sm">
+                          "Last time we did this, three attendees got calls from FAANG recruiters the same week. Coincidence? I think not!" 
+                        </p>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <div className="text-sm text-gray-400">Early Bird Price</div>
+                          <div className="text-xl font-bold text-white">$29.99</div>
+                        </div>
+                        <Button className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white rounded-full">
+                          Reserve Your Spot
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 text-center">
+                    <Link href="/mentors" className="text-blue-400 hover:text-blue-300 inline-flex items-center gap-1">
+                      View All Mentors <ChevronRight className="h-4 w-4" />
+                    </Link>
                   </div>
                 </TabsContent>
               </Tabs>
@@ -417,69 +538,131 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
               <div className="relative mb-6">
                 <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-75 blur-sm" />
                 <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-blue-500/30">
-                  <h3 className="text-xl font-bold mb-4">Start Your Career Journey</h3>
+                  <h3 className="text-xl font-bold mb-4">Elevate Your Developer Portfolio</h3>
                   <p className="text-gray-300 mb-6">
-                    This project will give you the skills needed to build advanced AI applications and stand out in the
-                    job market.
+                    This project will make your resume stand out and impress recruiters. Get the complete code and build it yourself!
                   </p>
+
+                  <div className="p-4 bg-blue-500/10 rounded-lg mb-4 border border-blue-500/20">
+                    <p className="italic text-blue-300 text-sm">
+                      "Recruiters be like: 'Oh, you built a DeepSeek clone? Let me fast-track your application real quick!'" 
+                    </p>
+                  </div>
 
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center gap-3">
-                      <Award className="h-5 w-5 text-blue-400" />
-                      <span>Certificate of completion</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-blue-400" />
-                      <span>{project.duration} estimated duration</span>
-                    </div>
-                    <div className="flex items-center gap-3">
                       <Calendar className="h-5 w-5 text-blue-400" />
-                      <span>Lifetime access</span>
+                      <span>Lifetime access to code</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Users className="h-5 w-5 text-blue-400" />
-                      <span>1-on-1 mentor support</span>
+                      <span>Free community support</span>
                     </div>
                   </div>
 
-                  <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full py-6">
-                    Enroll Now
-                  </Button>
+                  <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 p-4 rounded-lg border border-blue-500/30 mb-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-bold">Project Code</span>
+                      <span className="font-bold text-xl">$49</span>
+                    </div>
+                    <p className="text-sm text-gray-300 mb-4">Get the complete source code with documentation</p>
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full py-6">
+                      Buy Now
+                    </Button>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-green-600/20 to-blue-600/20 p-4 rounded-lg border border-green-500/30">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-bold">Premium Package</span>
+                      <span className="font-bold text-xl">$149</span>
+                    </div>
+                    <p className="text-sm text-gray-300 mb-4">Complete source code + 1-on-1 mentor setup and walkthrough</p>
+                    <Button className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white rounded-full py-6">
+                      Get Premium Access
+                    </Button>
+                    <p className="text-xs text-center mt-2 text-gray-400">HR-approved resume suggestion included!</p>
+                  </div>
                 </div>
               </div>
 
               <div className="relative">
                 <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-75 blur-sm" />
                 <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-blue-500/30">
-                  <h3 className="text-xl font-bold mb-4">Related Projects</h3>
-
+                  <h3 className="text-xl font-bold mb-4">Why This Project?</h3>
+                  
                   <div className="space-y-4">
-                    {[1, 2, 3].map((id) => (
-                      <Link href={`/project/${id}`} key={id} className="block group">
-                        <div className="flex gap-3">
-                          <div className="w-20 h-16 rounded-md overflow-hidden bg-gray-800 flex-shrink-0">
-                            <Image
-                              src="/placeholder.svg?height=64&width=80"
-                              alt="Related project"
-                              width={80}
-                              height={64}
-                              className="object-cover group-hover:scale-110 transition-transform duration-300"
-                            />
-                          </div>
-                          <div>
-                            <h4 className="font-medium group-hover:text-blue-400 transition-colors">
-                              {id === 1 ? "E-Commerce App" : id === 2 ? "Portfolio Website" : "Job Portal App"}
-                            </h4>
-                            <p className="text-sm text-gray-400">
-                              {id === 1 ? "Intermediate" : id === 2 ? "Beginner" : "Advanced"}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <Star className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium">Resume Gold</h4>
+                        <p className="text-sm text-gray-300">"So you're telling me this project alone might get me an interview? Shut up and take my money!"</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <Star className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium">Real-World Skills</h4>
+                        <p className="text-sm text-gray-300">Builds exactly the skills companies are desperate to hire for right now</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <Star className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium">100% Satisfaction</h4>
+                        <p className="text-sm text-gray-300">30-day money-back guarantee if it doesn't impress your potential employers</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12 mt-8">
+        <div className="relative">
+          <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-75 blur-sm" />
+          <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-blue-500/30">
+            <h2 className="text-2xl font-bold mb-6 text-center">How It Works</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">1</div>
+                <h3 className="text-xl font-bold mb-2">Purchase</h3>
+                <p className="text-gray-300">Choose your package and complete the payment process securely</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">2</div>
+                <h3 className="text-xl font-bold mb-2">Access</h3>
+                <p className="text-gray-300">Instantly receive a ZIP folder with complete source code and documentation</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mx-auto mb-4 text-2xl font-bold">3</div>
+                <h3 className="text-xl font-bold mb-2">Build</h3>
+                <p className="text-gray-300">Follow the setup guide to get your project running and customize it</p>
+              </div>
+            </div>
+            
+            <div className="mt-8 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 max-w-2xl mx-auto">
+              <h3 className="text-lg font-bold mb-2">Premium Package Bonus:</h3>
+              <p>Get a 45-minute one-on-one call with one of our expert mentors who will help you set up the project, explain the architecture, and provide customization tips to make it truly yours!</p>
+            </div>
+            
+            <div className="flex justify-center mt-8">
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full px-8 py-3">
+                Get Started Today
+              </Button>
             </div>
           </div>
         </div>
