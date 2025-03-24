@@ -1,16 +1,26 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { ArrowLeft } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ArrowLeft, Upload, User, Briefcase, MapPin, Calendar, Mail, Phone, Github, Linkedin, Download, CheckCircle, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import GlitchText from "@/components/glitch-text"
 import CrazyBackground from "@/components/crazy-background"
 import { useRouter } from "next/navigation"
+import LoginModal from "@/components/auth/login-modal"
+import SignupModal from "@/components/auth/signup-modal"
 
 export default function CustomProjectPage() {
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+  const [isSignupOpen, setIsSignupOpen] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [showRecommendations, setShowRecommendations] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -21,6 +31,15 @@ export default function CustomProjectPage() {
     router.push("/")
   }
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    setSelectedFiles(prev => [...prev, ...files])
+  }
+
+  const removeFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index))
+  }
+
   // Example documentation images
   const documentationImages = [
     "/placeholder.svg?height=200&width=300",
@@ -28,6 +47,38 @@ export default function CustomProjectPage() {
     "/placeholder.svg?height=200&width=300",
     "/placeholder.svg?height=200&width=300"
   ]
+
+  const recommendedProjects = [
+    {
+      id: 1,
+      title: "LMS App Using MERN Stack",
+      description: "Perfect match for your requirements! Build a complete Learning Management System.",
+      technologies: ["MongoDB", "Express", "React", "Node.js"],
+      difficulty: "Intermediate",
+      downloadUrl: "/project-files/lms-project.zip",
+      image: "/placeholder.svg?height=200&width=400"
+    },
+    {
+      id: 2,
+      title: "AI Assistant Platform",
+      description: "Create your own ChatGPT-like platform with advanced features.",
+      technologies: ["Next.js", "OpenAI", "TypeScript"],
+      difficulty: "Advanced",
+      downloadUrl: "/project-files/ai-assistant.zip",
+      image: "/placeholder.svg?height=200&width=400"
+    }
+  ]
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setShowSuccess(true)
+    // Hide the success message after 3 seconds
+    setTimeout(() => {
+      setShowSuccess(false)
+      // Optionally redirect to home page
+      router.push('/')
+    }, 3000)
+  }
 
   if (!mounted) return null
 
@@ -220,6 +271,64 @@ export default function CustomProjectPage() {
                         ></textarea>
                       </div>
                       
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300">Project Documents (Optional)</label>
+                        <div className="relative">
+                          <input
+                            type="file"
+                            multiple
+                            onChange={handleFileChange}
+                            className="hidden"
+                            id="file-upload"
+                            accept=".pdf,.doc,.docx,.txt,.zip,.rar"
+                          />
+                          <label
+                            htmlFor="file-upload"
+                            className="flex flex-col items-center justify-center w-full h-24 px-4 transition bg-black/50 border-2 border-green-500/30 border-dashed rounded-lg cursor-pointer hover:border-green-500/50"
+                          >
+                            <div className="flex flex-col items-center justify-center pt-2 pb-2">
+                              <Upload className="w-6 h-6 mb-2 text-green-400" />
+                              <p className="mb-1 text-sm text-gray-300">
+                                <span className="font-bold">Upload documents</span>
+                              </p>
+                              <p className="text-xs text-gray-400">
+                                PDF, DOC, DOCX, TXT (MAX. 10MB each)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+                        
+                        {selectedFiles.length > 0 && (
+                          <div className="mt-2">
+                            <div className="grid grid-cols-1 gap-2 max-h-40 overflow-y-auto p-2">
+                              {selectedFiles.map((file, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center justify-between p-2 bg-black/50 border border-green-500/30 rounded-lg"
+                                >
+                                  <div className="flex items-center space-x-2">
+                                    <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <span className="text-xs text-gray-300 truncate max-w-[230px]">
+                                      {file.name}
+                                    </span>
+                                  </div>
+                                  <button
+                                    onClick={() => removeFile(index)}
+                                    className="p-1 hover:bg-red-500/20 rounded-full transition-colors"
+                                  >
+                                    <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <label className="block text-sm font-medium text-gray-300">Email Address</label>
@@ -272,9 +381,16 @@ export default function CustomProjectPage() {
                         </label>
                       </div>
                       
-                      <Button className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white rounded-full py-6 text-lg font-bold shadow-lg shadow-green-500/20 transform transition-all duration-300 hover:translate-y-[-2px]">
-                        Submit Project Request
-                      </Button>
+                      <div className="space-y-6">
+                        <form onSubmit={handleSubmit}>
+                          <Button 
+                            type="submit"
+                            className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white rounded-full py-6 text-lg font-bold shadow-lg shadow-green-500/20 transform transition-all duration-300 hover:translate-y-[-2px]"
+                          >
+                            Submit Project Request
+                          </Button>
+                        </form>
+                      </div>
                       
                       <div className="text-center">
                         <p className="text-xs text-gray-400">You'll receive a response within 24 hours</p>
@@ -332,6 +448,19 @@ export default function CustomProjectPage() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence mode="wait">
+        {showSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="fixed top-4 right-4 bg-green-500/90 text-white px-6 py-4 rounded-lg shadow-lg backdrop-blur-sm z-50 flex items-center gap-2"
+          >
+            <CheckCircle className="w-5 h-5" />
+            <span>Project request submitted successfully!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 } 

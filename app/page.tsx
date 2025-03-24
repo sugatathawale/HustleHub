@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Flame, Star, ArrowRight, Compass, Play, Code, Sparkles, Clock, Layers } from "lucide-react"
+import { Flame, Star, ArrowRight, Compass, Play, Code, Sparkles, Clock, Layers, Filter, Lock, CheckCircle } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import CrazyBackground from "@/components/crazy-background"
@@ -14,6 +14,8 @@ import ParallaxHero from "@/components/parallax-hero"
 import MentorSection from "@/components/mentor-section"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
+import FloatingQuotes from "@/components/floating-quotes"
+import AdminLoginButton from "@/components/admin-login-button"
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -21,6 +23,7 @@ export default function Home() {
   const { setTheme } = useTheme()
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const router = useRouter()
+  const [activeFilter, setActiveFilter] = useState("all")
 
   useEffect(() => {
     setMounted(true)
@@ -47,7 +50,7 @@ export default function Home() {
       title: "Full Stack DeepSeek Clone",
       description: "Build an AI assistant platform with advanced natural language processing capabilities",
       image: "/placeholder.svg?height=300&width=500",
-      category: "AI",
+      category: "Fullstack",
       glow: "blue",
       skills: ["Next.js", "React", "OpenAI API", "TailwindCSS"],
       difficulty: "Advanced",
@@ -55,6 +58,17 @@ export default function Home() {
     },
     {
       id: 2,
+      title: "Modern React Dashboard",
+      description: "Create a beautiful and responsive admin dashboard with React and TailwindCSS",
+      image: "/placeholder.svg?height=300&width=500",
+      category: "Frontend",
+      glow: "pink",
+      skills: ["React", "TailwindCSS", "Charts.js", "Framer Motion"],
+      difficulty: "Intermediate",
+      duration: "4 weeks",
+    },
+    {
+      id: 3,
       title: "LMS App Using MERN Stack",
       description: "Create a complete learning management system with courses, quizzes, and user progress tracking",
       image: "/placeholder.svg?height=300&width=500",
@@ -65,7 +79,7 @@ export default function Home() {
       duration: "6 weeks",
     },
     {
-      id: 3,
+      id: 4,
       title: "E-Commerce App using Next.js",
       description: "Build a fully functional online store with payment processing and inventory management",
       image: "/placeholder.svg?height=300&width=500",
@@ -76,7 +90,7 @@ export default function Home() {
       duration: "5 weeks",
     },
     {
-      id: 4,
+      id: 5,
       title: "Responsive Portfolio Website",
       description: "Create a stunning portfolio website to showcase your skills and projects to potential employers",
       image: "/placeholder.svg?height=300&width=500",
@@ -87,7 +101,7 @@ export default function Home() {
       duration: "3 weeks",
     },
     {
-      id: 5,
+      id: 6,
       title: "Job Portal App Using MERN Stack",
       description: "Build a platform for job seekers and employers with advanced filtering and application tracking",
       image: "/placeholder.svg?height=300&width=500",
@@ -98,7 +112,7 @@ export default function Home() {
       duration: "7 weeks",
     },
     {
-      id: 6,
+      id: 7,
       title: "AI Image Generator SaaS App",
       description: "Create a text-to-image generation platform with subscription tiers and gallery features",
       image: "/placeholder.svg?height=300&width=500",
@@ -157,6 +171,19 @@ export default function Home() {
     router.push(`/project/${id}`)
   }
 
+  const filteredProjects = projects.filter(project => {
+    if (activeFilter === "all") return true
+    return project.category.toLowerCase() === activeFilter
+  })
+
+  const categories = [
+    { id: "all", label: "All Projects" },
+    { id: "frontend", label: "Frontend", icon: "🎨" },
+    { id: "backend", label: "Backend", icon: "⚙️" },
+    { id: "fullstack", label: "Full Stack", icon: "🚀" },
+    { id: "hero", label: "Hero Projects", icon: "⭐" }
+  ]
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-black text-white">
       <CrazyBackground />
@@ -210,6 +237,7 @@ export default function Home() {
                   </Button>
                 </div>
               </motion.div>
+              <AdminLoginButton />
             </div>
           </header>
 
@@ -225,16 +253,118 @@ export default function Home() {
                 <ParallaxHero />
 
                 <div className="mt-12">
-                  <div className="flex items-center justify-between mb-8">
-                    <GlitchText text="Career-Building Projects" className="text-3xl font-bold" />
-                    <Button variant="ghost" className="text-purple-400 hover:text-purple-300 gap-2">
-                      View all projects <ArrowRight className="h-4 w-4" />
-                    </Button>
+                  <div className="flex flex-col space-y-6 mb-8">
+                    <div className="flex items-center justify-between">
+                      <GlitchText text="Career-Building Projects" className="text-3xl font-bold" />
+                      <Button variant="ghost" className="text-purple-400 hover:text-purple-300 gap-2">
+                        View all projects <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    {/* Filter Buttons */}
+                    <div className="flex flex-wrap gap-3">
+                      {categories.map((category) => (
+                        <Button
+                          key={category.id}
+                          onClick={() => setActiveFilter(category.id)}
+                          className={`rounded-full transition-all duration-300 ${
+                            activeFilter === category.id
+                              ? "bg-purple-600 text-white"
+                              : "bg-gray-900 text-gray-300 hover:bg-gray-800"
+                          }`}
+                        >
+                          <span className="mr-2">{category.icon}</span>
+                          {category.label}
+                        </Button>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.slice(0, 6).map((project) => (
-                      <div key={project.id} onClick={() => handleProjectClick(project.id)} className="cursor-pointer">
+                  <div className="mb-8">
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-900 via-black to-blue-900 border border-purple-500/20">
+                      <div className="absolute inset-0">
+                        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.5))]"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 animate-pulse"></div>
+                      </div>
+                      
+                      <div className="relative p-8 flex flex-col md:flex-row items-center gap-6">
+                        {/* Project Preview */}
+                        <div className="w-full md:w-1/2">
+                          <div className="relative aspect-video rounded-lg overflow-hidden">
+                            <div className="absolute top-2 right-2 px-3 py-1 bg-purple-500 text-white text-xs rounded-full animate-pulse">
+                              New Launch 🚀
+                            </div>
+                            <img 
+                              src="/full-stack-deepseak.png" 
+                              alt="Full Stack DeepSeek Clone" 
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Project Info */}
+                        <div className="w-full md:w-1/2 space-y-4">
+                          <h2 className="text-2xl font-bold text-white">
+                            Full Stack DeepSeek Clone
+                          </h2>
+                          <p className="text-gray-300">
+                            Build an AI assistant platform similar to ChatGPT. This project will significantly boost your portfolio and catch recruiters' attention.
+                          </p>
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-2 text-purple-300">
+                              <CheckCircle className="w-5 h-5" />
+                              <span>Perfect for FAANG company applications</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-purple-300">
+                              <CheckCircle className="w-5 h-5" />
+                              <span>Demonstrates full-stack expertise</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-purple-300">
+                              <CheckCircle className="w-5 h-5" />
+                              <span>Shows AI integration capabilities</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <Button className="bg-purple-600 hover:bg-purple-700">
+                              Start Building Now
+                            </Button>
+                            <div className="flex items-center gap-2">
+                              <div className="flex -space-x-2">
+                                {[1,2,3].map((i) => (
+                                  <div key={i} className="w-8 h-8 rounded-full border-2 border-purple-900 bg-gray-800">
+                                    <img 
+                                      src={`/user${i}.jpg`} 
+                                      alt="User" 
+                                      className="w-full h-full rounded-full"
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                              <span className="text-sm text-gray-400">
+                                +45 developers enrolled this week
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <motion.div 
+                    layout
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  >
+                    {filteredProjects.map((project) => (
+                      <motion.div
+                        key={project.id}
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.3 }}
+                        onClick={() => handleProjectClick(project.id)}
+                        className="cursor-pointer"
+                      >
                         <HoverCard3D glow={project.glow}>
                           <div className="p-6 h-full flex flex-col">
                             <div className="relative w-full h-40 mb-4 rounded-lg overflow-hidden">
@@ -246,9 +376,7 @@ export default function Home() {
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                               <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                                <span
-                                  className={`text-xs px-2 py-1 rounded-full bg-${project.glow}-500/20 text-${project.glow}-500`}
-                                >
+                                <span className={`text-xs px-2 py-1 rounded-full bg-${project.glow}-500/20 text-${project.glow}-500`}>
                                   {project.category}
                                 </span>
                                 <span className="text-xs px-2 py-1 rounded-full bg-white/20 text-white">
@@ -283,17 +411,15 @@ export default function Home() {
                               <Button variant="ghost" className="text-white/70 hover:text-white gap-1 p-0">
                                 <Play className="h-4 w-4 text-red-500" /> Watch preview
                               </Button>
-                              <Button
-                                className={`bg-${project.glow}-500/20 text-${project.glow}-500 hover:bg-${project.glow}-500/30 rounded-full`}
-                              >
+                              <Button className={`bg-${project.glow}-500/20 text-${project.glow}-500 hover:bg-${project.glow}-500/30 rounded-full`}>
                                 <Sparkles className="mr-2 h-4 w-4" /> View Project
                               </Button>
                             </div>
                           </div>
                         </HoverCard3D>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div className="mt-20">
@@ -330,6 +456,198 @@ export default function Home() {
                 <div className="mb-8">
                   <GlitchText text="All Career-Building Projects" className="text-3xl font-bold mb-8" />
 
+                  {/* Featured Projects Slider */}
+                  <div className="relative mb-12 overflow-hidden">
+                    {/* Add a wrapper for continuous sliding */}
+                    <div 
+                      className="animate-scroll hover:animation-play-state-paused"
+                      style={{ display: 'flex', gap: '1.5rem' }}
+                    >
+                      {/* First set of cards */}
+                      <div className="flex gap-6 min-w-max">
+                        {/* Featured Project Card 1 */}
+                        <div className="w-[400px]">
+                          <div className="relative rounded-xl bg-gradient-to-r from-blue-900 via-black to-purple-900 border border-blue-500/20 overflow-hidden">
+                            <div className="p-6">
+                              <div className="absolute top-3 right-3 px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs rounded-full animate-pulse z-10">
+                                Most Popular 🔥
+                              </div>
+                              
+                              <h3 className="text-xl font-bold mb-3">LMS App Using MERN Stack</h3>
+                              
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-400">MongoDB</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400">Express</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">React</span>
+                              </div>
+
+                              <p className="text-sm text-gray-300 mb-4">
+                                Build a complete LMS that will impress FAANG recruiters. Used by developers now at Google & Meta.
+                              </p>
+
+                              <div className="flex items-center justify-between">
+                                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full">
+                                  Start Building
+                                </Button>
+                                
+                                <div className="flex items-center gap-2">
+                                  <div className="flex -space-x-2">
+                                    {[1,2].map((i) => (
+                                      <div key={i} className="w-6 h-6 rounded-full border-2 border-blue-900 bg-gray-800 overflow-hidden">
+                                        <img 
+                                          src={`/user${i}.jpg`} 
+                                          alt="Developer" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <span className="text-xs text-gray-400">+120 enrolled</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Featured Project Card 2 */}
+                        <div className="w-[400px]">
+                          <div className="relative rounded-xl bg-gradient-to-r from-purple-900 via-black to-pink-900 border border-purple-500/20 overflow-hidden">
+                            <div className="p-6">
+                              <div className="absolute top-3 right-3 px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs rounded-full animate-pulse z-10">
+                                New Launch 🚀
+                              </div>
+                              
+                              <h3 className="text-xl font-bold mb-3">AI Assistant Platform</h3>
+                              
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">Next.js</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-pink-500/20 text-pink-400">OpenAI</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-400">TypeScript</span>
+                              </div>
+
+                              <p className="text-sm text-gray-300 mb-4">
+                                Create a ChatGPT-like platform. Perfect for showing AI integration skills to employers.
+                              </p>
+
+                              <div className="flex items-center justify-between">
+                                <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full">
+                                  View Project
+                                </Button>
+                                
+                                <div className="flex items-center gap-2">
+                                  <div className="flex -space-x-2">
+                                    {[1,2].map((i) => (
+                                      <div key={i} className="w-6 h-6 rounded-full border-2 border-purple-900 bg-gray-800 overflow-hidden">
+                                        <img 
+                                          src={`/user${i}.jpg`} 
+                                          alt="Developer" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <span className="text-xs text-gray-400">+45 enrolled</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Duplicate the cards for continuous scrolling */}
+                      <div className="flex gap-6 min-w-max">
+                        {/* Duplicate of Featured Project Card 1 */}
+                        <div className="w-[400px]">
+                          <div className="relative rounded-xl bg-gradient-to-r from-blue-900 via-black to-purple-900 border border-blue-500/20 overflow-hidden">
+                            <div className="p-6">
+                              <div className="absolute top-3 right-3 px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs rounded-full animate-pulse z-10">
+                                Most Popular 🔥
+                              </div>
+                              
+                              <h3 className="text-xl font-bold mb-3">LMS App Using MERN Stack</h3>
+                              
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-400">MongoDB</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400">Express</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">React</span>
+                              </div>
+
+                              <p className="text-sm text-gray-300 mb-4">
+                                Build a complete LMS that will impress FAANG recruiters. Used by developers now at Google & Meta.
+                              </p>
+
+                              <div className="flex items-center justify-between">
+                                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full">
+                                  Start Building
+                                </Button>
+                                
+                                <div className="flex items-center gap-2">
+                                  <div className="flex -space-x-2">
+                                    {[1,2].map((i) => (
+                                      <div key={i} className="w-6 h-6 rounded-full border-2 border-blue-900 bg-gray-800 overflow-hidden">
+                                        <img 
+                                          src={`/user${i}.jpg`} 
+                                          alt="Developer" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <span className="text-xs text-gray-400">+120 enrolled</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Duplicate of Featured Project Card 2 */}
+                        <div className="w-[400px]">
+                          <div className="relative rounded-xl bg-gradient-to-r from-purple-900 via-black to-pink-900 border border-purple-500/20 overflow-hidden">
+                            <div className="p-6">
+                              <div className="absolute top-3 right-3 px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs rounded-full animate-pulse z-10">
+                                New Launch 🚀
+                              </div>
+                              
+                              <h3 className="text-xl font-bold mb-3">AI Assistant Platform</h3>
+                              
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">Next.js</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-pink-500/20 text-pink-400">OpenAI</span>
+                                <span className="text-xs px-2 py-1 rounded-full bg-blue-500/20 text-blue-400">TypeScript</span>
+                              </div>
+
+                              <p className="text-sm text-gray-300 mb-4">
+                                Create a ChatGPT-like platform. Perfect for showing AI integration skills to employers.
+                              </p>
+
+                              <div className="flex items-center justify-between">
+                                <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-full">
+                                  View Project
+                                </Button>
+                                
+                                <div className="flex items-center gap-2">
+                                  <div className="flex -space-x-2">
+                                    {[1,2].map((i) => (
+                                      <div key={i} className="w-6 h-6 rounded-full border-2 border-purple-900 bg-gray-800 overflow-hidden">
+                                        <img 
+                                          src={`/user${i}.jpg`} 
+                                          alt="Developer" 
+                                          className="w-full h-full object-cover"
+                                        />
+                                      </div>
+                                    ))}
+                                  </div>
+                                  <span className="text-xs text-gray-400">+45 enrolled</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Rest of your project grid remains the same */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project) => (
                       <div key={project.id} onClick={() => handleProjectClick(project.id)} className="cursor-pointer">
@@ -661,6 +979,34 @@ export default function Home() {
           </AnimatePresence>
         </main>
       </div>
+
+      {/* Add this section for the floating quotes */}
+      <section className="container mx-auto px-4 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+            Developer Wisdom™ 
+          </h2>
+          <FloatingQuotes />
+        </motion.div>
+      </section>
+
+      <footer className="py-6 text-center">
+        <div className="flex items-center justify-center gap-4">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            className="text-gray-500 hover:text-gray-400 text-sm flex items-center gap-2"
+            onClick={() => router.push('/admin/login')}
+          >
+            <Lock className="w-3 h-3" />
+            Admin Access
+          </Button>
+        </div>
+      </footer>
     </div>
   )
 }

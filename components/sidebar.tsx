@@ -3,7 +3,7 @@ import { FolderIcon, Award, BookOpen, Code, FileIcon, Star, ImageIcon, Briefcase
 export default function Sidebar() {
   const menuItems = [
     { icon: <FolderIcon className="w-5 h-5" />, label: "Projects" },
-    // { icon: <Award className="w-5 h-5" />, label: "Get Certified" },
+    { icon: <Award className="w-5 h-5" />, label: "Get Certified" },
     { icon: <BookOpen className="w-5 h-5" />, label: "Courses" },
     { icon: <Code className="w-5 h-5" />, label: "Source Code" },
     { icon: <FileIcon className="w-5 h-5" />, label: "Project Assets" },

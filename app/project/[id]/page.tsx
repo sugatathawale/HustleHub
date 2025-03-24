@@ -159,20 +159,14 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
               <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-75 blur-sm" />
               <div className="relative rounded-xl overflow-hidden">
                 <div className="relative aspect-video bg-gray-900">
-                  <Image
-                    src="/placeholder.svg?height=500&width=1000"
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <Button
-                      className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white"
-                      onClick={togglePlayPause}
-                    >
-                      {isPlaying ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8 ml-1" />}
-                    </Button>
-                  </div>
+                  <iframe
+                    src="https://www.youtube.com/embed/umvsWXbky94"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full rounded-xl"
+                  ></iframe>
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 pointer-events-none"></div>
                 </div>
 
                 <div className="bg-gray-900 p-4 flex items-center justify-between">
